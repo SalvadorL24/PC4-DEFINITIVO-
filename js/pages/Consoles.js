@@ -3,7 +3,7 @@ function Consoles({ addToCart }) {
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    fetch(`${window.baseUrl}/js/data/consolas.json`)
+    fetch('./js/data/consolas.json`)
       .then(response => response.json())
       .then(data => {
         setConsoles(data);
