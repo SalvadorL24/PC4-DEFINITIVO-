@@ -1,4 +1,4 @@
-const { useState } = React;
+const { useState, useEffect } = React;
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -6,9 +6,29 @@ function App() {
   const [cartItems, setCartItems] = useState([]);
   const [showCart, setShowCart] = useState(false);
 
+  // Cargar carrito desde localStorage al iniciar
+  useEffect(() => {
+    const savedCart = localStorage.getItem('cartItems');
+    if (savedCart) {
+      setCartItems(JSON.parse(savedCart));
+    }
+  }, []);
+
+  // Guardar carrito en localStorage cuando cambia
+  useEffect(() => {
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  }, [cartItems]);
+
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
+    localStorage.setItem('darkMode', !darkMode);
   };
+
+  // Cargar modo oscuro desde localStorage al iniciar
+  useEffect(() => {
+    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+    setDarkMode(savedDarkMode);
+  }, []);
 
   const addToCart = (product) => {
     setCartItems([...cartItems, product]);
@@ -27,7 +47,7 @@ function App() {
       case 'consolas': return <Consoles addToCart={addToCart} />;
       case 'accesorios': return <Accessories addToCart={addToCart} />;
       case 'contacto': return <Contact />;
-      default: return <Home addToCart={addToCart} />;
+      default: return <Home />;
     }
   };
 
