@@ -3,15 +3,12 @@ function Accessories({ addToCart }) {
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    fetch(`${window.baseUrl}/js/data/accesorios.json`)
-      .then(response => response.json())
-      .then(data => {
-        setAccessories(data);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error('Error loading accessories:', error);
-        setLoading(false);
+   fetch('/js/data/accesorios.json')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+  })
+  .catch(error => console.error('Error al cargar el JSON:', error));
       });
   }, []);
 
